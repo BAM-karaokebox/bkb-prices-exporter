@@ -1,0 +1,39 @@
+{
+  "name": "bkb-prices-exporter",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.29.1",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-editorconfig": "^4.0.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.6.4",
+    "eslint-plugin-playwright": "^0.11.2",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
+    "prettier-eslint": "^15.0.1",
+    "typescript": "^4.9.4"
+  },
+  "scripts": {
+    "fmt": "prettier --write '**/*.{ts,js}'",
+    "lint": "eslint . --ext ts,js .",
+    "lint:fix": "eslint --fix . --ext ts,js .",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,ts,css,md}": "prettier --write",
+    "*.{js,json,ts}": "eslint"
+  }
+}
