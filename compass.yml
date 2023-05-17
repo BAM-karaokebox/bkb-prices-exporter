@@ -1,0 +1,20 @@
+name: bkb-prices-exporter
+id: ari:cloud:compass:8d0ffbf6-f848-4e6e-b50c-9f0942a3db3d:component/1d792a34-5b27-4942-8261-794068ee87d9/228a20dd-f68b-4af3-8331-24d6fe9b955c
+description: null
+configVersion: 1
+typeId: SERVICE
+fields:
+  tier: 4
+links:
+  - name: null
+    type: REPOSITORY
+    url: https://github.com/BAM-karaokebox/bkb-prices-exporter
+relationships:
+  DEPENDS_ON: []
+labels:
+  - automation
+  - bam-karaokebox
+  - import-export
+  - language:typescript
+  - source:github
+customFields: null
