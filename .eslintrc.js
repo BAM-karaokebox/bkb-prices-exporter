@@ -7,14 +7,13 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
+    "plugin:prettier/recommended",
     "plugin:editorconfig/all",
-    "plugin:editorconfig/noconflict",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:playwright/playwright-test",
     "prettier",
   ],
-  ignorePatterns: ["build", "coverage", "playwright-report", "package-lock.json", "yarn.lock", "*.json"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: "tsconfig.json",
