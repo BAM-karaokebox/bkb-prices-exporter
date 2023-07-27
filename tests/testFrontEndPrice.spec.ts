@@ -5,7 +5,7 @@ import { START_DATE, BASE_URL, QA_MARKER, DAYS } from "./config/config";
 import { City, CITIES } from "./utils/Cities";
 import { MONTHS } from "./utils/Months";
 import { csvAsTable } from "./utils/CSV.utils";
-import { dateToLocalISOShortDate, getFutureDate } from "./utils/Dates.utils";
+import { dateToLocalISOShortDate, getFutureDate, dateAsTuple } from "./utils/Dates.utils";
 
 const browseBooking = async (page: Page, city: City, date: string) => {
   const TEST_URL = `${BASE_URL}/booking?city=${city.name}#date=${date}&city=${city.name}${QA_MARKER}`;
@@ -16,20 +16,11 @@ const browseBooking = async (page: Page, city: City, date: string) => {
 };
 
 const getData = async (page: Page, city: City, date: string) => {
-  // select the date
-  const newDay = date.substring(8, 10);
-  const newMonth = date.substring(5, 7);
-  const newMonthInt = parseInt(newMonth, 10);
-
-  // console.log("DATE NEW", newDay, MONTHS[newMonthInt - 1].name);
-
+  const [day, month] = dateAsTuple(date);
   const nowadayDay = await page.locator(".cell.day.selected >> nth=0").innerText();
-  let nowadayMonth = await page.locator(".day__month_btn >> nth=0").innerText();
-  nowadayMonth = nowadayMonth.split(" ")[0];
+  const nowadayMonth = (await page.locator(".day__month_btn >> nth=0").innerText()).split(" ")[0];
 
-  // await page.waitForTimeout(1000);
-
-  if (nowadayMonth === MONTHS[newMonthInt - 1].name && parseInt(nowadayDay, 10) > parseInt(newDay, 10)) {
+  if (nowadayMonth === MONTHS[month - 1].name && parseInt(nowadayDay, 10) > day) {
     test.skip();
   }
 
@@ -84,23 +75,11 @@ const getData = async (page: Page, city: City, date: string) => {
   ];
 
   const priceRowsCSV = priceRows.join("\n");
-  // console.log('----------------------------------------------------------------------');
-  // console.log(checkToString);
-  // console.log('----------------------------------------------------------------------');
   console.table(csvAsTable(priceRowsCSV));
-  // let venues = city.venues;
-  // if (venues?.length) {
-  //   for (let i = 0; i < venues?.length; i++) {
-  //     fs.writeFileSync(
-  //       `./PriceCSV/${date} - ${city.name} - ${
-  //         venue.name
-  //       }.csv`,
-  //       checkToString
-  //     );
-  //   }
-  // } else {
+  if (!fs.existsSync("./PriceCSV/")) {
+    fs.mkdirSync("./PriceCSV/");
+  }
   fs.writeFileSync(`./PriceCSV/${date} - ${city.name}.csv`, priceRowsCSV);
-  // }
 };
 
 [...Array(DAYS).keys()].forEach((day) => {
