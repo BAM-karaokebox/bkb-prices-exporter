@@ -21,6 +21,7 @@ const getData = async (page: Page, city: City, date: string) => {
   const nowadayMonth = (await page.locator(".day__month_btn >> nth=0").innerText()).split(" ")[0];
 
   if (nowadayMonth === MONTHS[month - 1].name && parseInt(nowadayDay, 10) > day) {
+    // eslint-disable-next-line playwright/no-skipped-test
     test.skip();
   }
 
